@@ -1,4 +1,4 @@
-<img src="./images/Study_guide.png" alt="Study Guide" width="500">\
+<img src="./images/Study_guide.png" alt="Study Guide" width="600">\
 <https://leetcode.com/discuss/study-guide/494279/Comprehensive-Data-Structure-and-Algorithm-Study-Guide>
 <br>
 <br>
