@@ -4,4 +4,4 @@
 <br>
 # Progress
 ### TIME & SPACE COMPLEXITY
-- **Bari's Algorithm Playlist(1-16)** (12/16)(75%)
+- **Bari's Algorithm Playlist(1-16)** (13/16)(81%)
