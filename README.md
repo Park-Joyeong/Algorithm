@@ -4,4 +4,6 @@
 <br>
 # Progress
 ### TIME & SPACE COMPLEXITY
-- **Bari's Algorithm Playlist(1-16)** (14/16)(87%)
+- **Bari's Algorithm Playlist(1-16)** (16/16)(100%)
+### DATA STRUCTURE
+- **Data Structures Full Tutorial from a Google Engineer** (0/55)(0%)
