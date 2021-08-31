@@ -1,10 +1,10 @@
+/**
+ * A generic dynamic array implementation
+ *
+ * 
+ */
 package Data_Structure.Dynamic_Array;
 
-import java.util.Iterator;
-
-/**
- * DynamicArray
- */
 @SuppressWarnings("unchecked")
 public class DynamicArray<T> implements Iterable<T> {
 
@@ -103,9 +103,42 @@ public class DynamicArray<T> implements Iterable<T> {
     return -1;
   }
 
+  public boolean contains(Object obj) {
+    return indexOf(obj) != -1;
+  }
+
+  // Iterator is still fast but not as fast as iterative for loop
   @Override
-  public Iterator<T> iterator() {
-    // TODO Auto-generated method stub
-    return null;
+  public java.util.Iterator<T> iterator() {
+    return new java.util.Iterator<T>() {
+      int index = 0;
+
+      @Override
+      public boolean hasNext() {
+        return index < len;
+      }
+
+      @Override
+      public T next() {
+        return arr[index++];
+      }
+
+      @Override
+      public void remove() {
+        throw new UnsupportedOperationException();
+      }
+    };
+  }
+
+  @Override
+  public String toString() {
+    if (len == 0)
+      return "[]";
+    else {
+      StringBuilder sb = new StringBuilder(len).append("[");
+      for (int i = 0; i < len - 1; i++)
+        sb.append(arr[i] + ", ");
+      return sb.append(arr[len - 1] + "]").toString();
+    }
   }
 }

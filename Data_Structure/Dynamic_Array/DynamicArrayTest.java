@@ -4,9 +4,6 @@ import static com.google.common.truth.Truth.assertThat;
 
 import org.junit.Test;
 
-/**
- * DynamicArrayTest
- */
 public class DynamicArrayTest {
 
   @Test
@@ -152,5 +149,106 @@ public class DynamicArrayTest {
     assertThat(list.remove("b")).isFalse();
     assertThat(list.remove("c")).isFalse();
     assertThat(list.remove("d")).isFalse();
+  }
+
+  @Test
+  public void testIndexOfNullElement() {
+    DynamicArray<String> list = new DynamicArray<>();
+    String[] strs = { "a", "b", null, "d" };
+    for (String s : strs)
+      list.add(s);
+    assertThat(list.indexOf(null)).isEqualTo(2);
+  }
+
+  @Test
+  public void testAddingElements() {
+
+    DynamicArray<Integer> list = new DynamicArray<>();
+
+    int[] elems = { 1, 2, 3, 4, 5, 6, 7 };
+
+    for (int i = 0; i < elems.length; i++)
+      list.add(elems[i]);
+
+    for (int i = 0; i < elems.length; i++)
+      assertThat(list.get(i).intValue()).isEqualTo(elems[i]);
+  }
+
+  @Test
+  public void testAddAndRemove() {
+
+    DynamicArray<Long> list = new DynamicArray<>(0);
+
+    for (int i = 0; i < 55; i++)
+      list.add(44L);
+    for (int i = 0; i < 55; i++)
+      list.remove(44L);
+    assertThat(list.isEmpty()).isTrue();
+
+    for (int i = 0; i < 55; i++)
+      list.add(44L);
+    for (int i = 0; i < 55; i++)
+      list.removeAt(0);
+    assertThat(list.isEmpty()).isTrue();
+
+    for (int i = 0; i < 155; i++)
+      list.add(44L);
+    for (int i = 0; i < 155; i++)
+      list.remove(44L);
+    assertThat(list.isEmpty()).isTrue();
+
+    for (int i = 0; i < 155; i++)
+      list.add(44L);
+    for (int i = 0; i < 155; i++)
+      list.removeAt(0);
+    assertThat(list.isEmpty()).isTrue();
+  }
+
+  @Test
+  public void testAddSetRemove() {
+
+    DynamicArray<Long> list = new DynamicArray<>(0);
+
+    for (int i = 0; i < 55; i++)
+      list.add(44L);
+    for (int i = 0; i < 55; i++)
+      list.set(i, 33L);
+    for (int i = 0; i < 55; i++)
+      list.remove(33L);
+    assertThat(list.isEmpty()).isTrue();
+
+    for (int i = 0; i < 55; i++)
+      list.add(44L);
+    for (int i = 0; i < 55; i++)
+      list.set(i, 33L);
+    for (int i = 0; i < 55; i++)
+      list.removeAt(0);
+    assertThat(list.isEmpty()).isTrue();
+
+    for (int i = 0; i < 155; i++)
+      list.add(44L);
+    for (int i = 0; i < 155; i++)
+      list.set(i, 33L);
+    for (int i = 0; i < 155; i++)
+      list.remove(33L);
+    assertThat(list.isEmpty()).isTrue();
+
+    for (int i = 0; i < 155; i++)
+      list.add(44L);
+    for (int i = 0; i < 155; i++)
+      list.removeAt(0);
+    assertThat(list.isEmpty()).isTrue();
+  }
+
+  @Test
+  public void testSize() {
+
+    DynamicArray<Integer> list = new DynamicArray<>();
+
+    Integer[] elems = { -76, 45, 66, 3, null, 54, 33 };
+    for (int i = 0, sz = 1; i < elems.length; i++, sz++) {
+      list.add(elems[i]);
+      assertThat(list.size()).isEqualTo(sz);
+    }
   }
 }
