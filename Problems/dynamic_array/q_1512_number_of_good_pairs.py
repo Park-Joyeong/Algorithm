@@ -29,7 +29,29 @@ from typing import List
 # 3                 3
 # 4                 6
 # => n*(n-1)/2
-# I
+# 
+# Python generator expression
+# >>> iterator = ('Hello' for i in range(3))
+# >>> for x in iterator:
+# ...     print(x)
+# 'Hello'
+# 'Hello'
+# 'Hello'
+#
+# >>> listcomp = ['Hello' for i in range(3)]
+# >>> genexpr = ('Hello' for i in range(3))
+# >>> listcomp
+# ['Hello', 'Hello', 'Hello']
+# >>> genexpr
+# <generator object <genexpr> at 0x1036c3200>
+# >>> next(genexpr)
+# 'Hello'
+# >>> next(genexpr)
+# 'Hello'
+# >>> next(genexpr)
+# 'Hello'
+# >>> next(genexpr)
+# StopIteration
 class Solution:
     def numIdenticalPairs(self, nums: List[int]) -> int:
         return sum(int(k * (k - 1) / 2) for k in collections.Counter(nums).values())
