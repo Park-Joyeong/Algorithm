@@ -14,4 +14,4 @@
 
 ## DATA STRUCTURE
 
-- **Data Structures Full Tutorial from a Google Engineer** (6/55)(10%)
+- **Data Structures Full Tutorial from a Google Engineer** (7/55)(12%)

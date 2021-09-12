@@ -1,4 +1,4 @@
-package Data_Structure.Dynamic_Array;
+package datastructures.dynamicarray;
 
 import static com.google.common.truth.Truth.assertThat;
 

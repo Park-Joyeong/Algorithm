@@ -3,7 +3,7 @@
  *
  * 
  */
-package Data_Structure.Dynamic_Array;
+package datastructures.dynamicarray;
 
 @SuppressWarnings("unchecked")
 public class DynamicArray<T> implements Iterable<T> {
