@@ -23,6 +23,7 @@ public class DoublyLinkedListTest {
     @Test
     public void testEmptyList() {
         assertThat(list.isEmpty()).isTrue();
+        assertThat(list.size()).isEqualTo(0);
     }
 
 }
