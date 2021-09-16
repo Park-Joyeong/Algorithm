@@ -26,4 +26,13 @@ public class DoublyLinkedListTest {
         assertThat(list.size()).isEqualTo(0);
     }
 
+    @Test(expected = Exception.class)
+    public void testRemoveFirstOfEmpty() {
+        list.removeFirst();
+    }
+
+    @Test(expected = Exception.class)
+    public void testRemoveLastOfEmpty() {
+        list.removeLast();
+    }
 }

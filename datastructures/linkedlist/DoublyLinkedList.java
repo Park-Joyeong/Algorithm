@@ -5,6 +5,8 @@
  */
 package datastructures.linkedlist;
 
+import javax.management.RuntimeErrorException;
+
 public class DoublyLinkedList<T> implements Iterable<T> {
     private int size = 0;
     private Node<T> head = null;
@@ -48,6 +50,54 @@ public class DoublyLinkedList<T> implements Iterable<T> {
     // Is this linked list empty?
     public boolean isEmpty() {
         return size() == 0;
+    }
+
+    // Remove the first value at the head of the linked list, O(1)
+    public T removeFirst() {
+        // Can't remove data from an empty list
+        if (isEmpty())
+            throw new RuntimeException("Empty list");
+
+        // Extract the data at the head and move
+        // the head pointer forwards one node
+        T data = head.data;
+        head = head.next;
+        --size;
+
+        // If the list is empty set the tail to null
+        if (isEmpty())
+            tail = null;
+
+        // Do a memory cleanup of the previous node
+        else
+            head.prev = null;
+
+        // Return the data that was at the first node we just removec
+        return data;
+    }
+
+    // Remove the last value at the tail of the linked list, O(1)
+    public T removeLast() {
+        // Can't remove data from an empty list
+        if (isEmpty())
+            throw new RuntimeException("Empty list");
+
+        // Extract the data at the tail and move
+        // the tail pointer backwards one node
+        T data = tail.data;
+        tail = tail.prev;
+        --size;
+
+        // If the list is now empty set the head to null
+        if (isEmpty())
+            head = null;
+
+        // Do a memory clean of the node that was just removed
+        else
+            tail.next = null;
+
+        // Return the data that was in the last node we just removed
+        return data;
     }
 
     @Override
