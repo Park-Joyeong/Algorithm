@@ -35,4 +35,12 @@ public class DoublyLinkedListTest {
     public void testRemoveLastOfEmpty() {
         list.removeLast();
     }
+
+    @Test(expected = Exception.class)
+    public void testPeekFirstOfEmpty() {
+        list.peekFirst();
+    }
+
+    // TODO
+    
 }

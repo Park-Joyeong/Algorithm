@@ -5,8 +5,6 @@
  */
 package datastructures.linkedlist;
 
-import javax.management.RuntimeErrorException;
-
 public class DoublyLinkedList<T> implements Iterable<T> {
     private int size = 0;
     private Node<T> head = null;
@@ -51,6 +49,71 @@ public class DoublyLinkedList<T> implements Iterable<T> {
     public boolean isEmpty() {
         return size() == 0;
     }
+
+    // Add an element to the tail of the linked list, O(1)
+    public void add(T elem) {
+        addLast(elem);
+    }
+
+    // Add a node to the tail of the linked list, O(1)
+    public void addLast(T elem) {
+        if (isEmpty()) {
+            head = tail = new Node<T>(elem, null, null);
+        } else {
+            tail.next = new Node<T>(elem, null, null);
+            tail = tail.next;
+        }
+        size++;
+    }
+
+    // Add an element to the beginning of this linked list, O(1)
+    public void addFirst(T elem) {
+        if (isEmpty()) {
+            head = tail = new Node<T>(elem, null, null);
+        } else {
+            head.prev = new Node<T>(elem, null, null);
+            head = head.prev;
+        }
+        size++;
+    }
+
+    // Add an element at a specified index
+    public void addAt(int index, T data) throws Exception {
+        if (index < 0) {
+            throw new Exception("Illegal Index");
+        }
+        if (index == 0) {
+            addFirst(data);
+            return;
+        }
+
+        if (index == size) {
+            addLast(data);
+            return;
+        }
+
+        Node<T> temp = head;
+        for (int i = 0; i < index - 1; i++) {
+            temp = temp.next;
+        }
+        Node<T> newNode = new Node<>(data, temp, temp.next);
+        temp.next.prev = newNode;
+        temp.next = newNode;
+
+        size++;
+    }
+
+    // Check the value of the first node if it exists, O(1)
+    public T peekFirst() {
+        if (isEmpty())
+            throw new RuntimeException("Empty list");
+        return head.data;
+    }
+
+    // TODO
+
+
+
 
     // Remove the first value at the head of the linked list, O(1)
     public T removeFirst() {
