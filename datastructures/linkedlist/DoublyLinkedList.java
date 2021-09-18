@@ -60,7 +60,7 @@ public class DoublyLinkedList<T> implements Iterable<T> {
         if (isEmpty()) {
             head = tail = new Node<T>(elem, null, null);
         } else {
-            tail.next = new Node<T>(elem, null, null);
+            tail.next = new Node<T>(elem, tail, null);
             tail = tail.next;
         }
         size++;
@@ -71,7 +71,7 @@ public class DoublyLinkedList<T> implements Iterable<T> {
         if (isEmpty()) {
             head = tail = new Node<T>(elem, null, null);
         } else {
-            head.prev = new Node<T>(elem, null, null);
+            head.prev = new Node<T>(elem, null, head);
             head = head.prev;
         }
         size++;
@@ -110,10 +110,12 @@ public class DoublyLinkedList<T> implements Iterable<T> {
         return head.data;
     }
 
-    // TODO
-
-
-
+    // Check the value of the last node if it exists, O(1)
+    public T peekLast() {
+        if (isEmpty())
+            throw new RuntimeException("Empty list");
+        return tail.data;
+    }
 
     // Remove the first value at the head of the linked list, O(1)
     public T removeFirst() {
@@ -161,6 +163,56 @@ public class DoublyLinkedList<T> implements Iterable<T> {
 
         // Return the data that was in the last node we just removed
         return data;
+    }
+
+    // Remove an arbitary node from the linked list, O(1)
+    public T remove(Node<T> node) {
+        // If the node to remove is somewhere either at the
+        // head or tail handle those independently
+        if (node.prev == null)
+            return removeFirst();
+        if (node.next == null)
+            return removeLast();
+
+        // Make the pointers of adjacent nodes skip over 'node'
+        node.next.prev = node.prev;
+        node.prev.next = node.next;
+
+        // Temporarily store the data we want to return
+        T data = node.data;
+
+        // Memory cleanup
+        node.data = null;
+        node = node.prev = node.next = null;
+
+        --size;
+
+        // Return the data in the node we just removed
+        return data;
+    }
+
+    // Remove a particular value in the linked list, O(n)
+    public boolean remove(Object obj) {
+        Node<T> trav = head;
+
+        // Support searching for null
+        if (obj == null) {
+            for (trav = head; trav != null; trav = trav.next) {
+                if (trav.data == null) {
+                    remove(trav);
+                    return true;
+                }
+            }
+            // Search for non null object
+        } else {
+            for (trav = head; trav != null; trav = trav.next) {
+                if (obj.equals(trav.data)) {
+                    remove(trav);
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     @Override
