@@ -160,6 +160,107 @@ public class DoublyLinkedListTest {
         assertThat(strs.size()).isEqualTo(0);
     }
 
-    // TODO
+    @Test
+    public void testRemoveAt() {
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        list.removeAt(0);
+        list.removeAt(2);
+        assertThat(list.peekFirst()).isEqualTo(2);
+        assertThat(list.peekLast()).isEqualTo(3);
+        list.removeAt(1);
+        list.removeAt(0);
+        assertThat(list.size()).isEqualTo(0);
+    }
+
+    @Test
+    public void testClear() {
+        list.add(22);
+        list.add(33);
+        list.add(44);
+        assertThat(list.size()).isEqualTo(3);
+        list.clear();
+        assertThat(list.size()).isEqualTo(0);
+        list.add(22);
+        list.add(33);
+        list.add(44);
+        assertThat(list.size()).isEqualTo(3);
+        list.clear();
+        assertThat(list.size()).isEqualTo(0);
+    }
+
+    @Test
+    public void testRandomizedRemoving() {
+        java.util.LinkedList<Integer> javaLinkedList = new java.util.LinkedList<>();
+        for (int loops = 0; loops < LOOPS; loops++) {
+
+            list.clear();
+            javaLinkedList.clear();
+
+            List<Integer> randNums = getRandList(TEST_SZ);
+            for (Integer value : randNums) {
+                javaLinkedList.add(value);
+                list.add(value);
+            }
+
+            Collections.shuffle(randNums);
+
+            for (int i = 0; i < randNums.size(); i++) {
+
+                Integer rm_val = randNums.get(i);
+                assertThat(javaLinkedList.remove(rm_val)).isEqualTo(list.remove(rm_val));
+                assertThat(javaLinkedList.size()).isEqualTo(list.size());
+
+                java.util.Iterator<Integer> iter1 = javaLinkedList.iterator();
+                java.util.Iterator<Integer> iter2 = list.iterator();
+                while (iter1.hasNext())
+                    assertThat(iter1.next()).isEqualTo(iter2.next());
+
+                iter1 = javaLinkedList.iterator();
+                iter2 = list.iterator();
+                while (iter1.hasNext())
+                    assertThat(iter1.next()).isEqualTo(iter2.next());
+            }
+
+            list.clear();
+            javaLinkedList.clear();
+
+            for (Integer value : randNums) {
+                javaLinkedList.add(value);
+                list.add(value);
+            }
+
+            // Try removing elements whether or not they exist
+            for (int i = 0; i < randNums.size(); i++) {
+
+                Integer rm_val = (int) (MAX_RAND_NUM * Math.random());
+                assertThat(javaLinkedList.remove(rm_val)).isEqualTo(list.remove(rm_val));
+                assertThat(javaLinkedList.size()).isEqualTo(list.size());
+
+                java.util.Iterator<Integer> iter1 = javaLinkedList.iterator();
+                java.util.Iterator<Integer> iter2 = list.iterator();
+                while (iter1.hasNext())
+                    assertThat(iter1.next()).isEqualTo(iter2.next());
+            }
+        }
+    }
+
+    @Test
+    public void testRandomizedRemoveAt() {
+        // TODO
+    }
+
+    // Generate a list of random numbers
+    static List<Integer> getRandList(int sz) {
+        List<Integer> lst = new ArrayList<>(sz);
+        for (int i = 0; i < sz; i++)
+            lst.add((int) (Math.random() * MAX_RAND_NUM));
+        for (int i = 0; i < NUM_NULLS; i++)
+            lst.add(null);
+        Collections.shuffle(lst);
+        return lst;
+    }
 
 }

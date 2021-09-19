@@ -166,7 +166,7 @@ public class DoublyLinkedList<T> implements Iterable<T> {
     }
 
     // Remove an arbitary node from the linked list, O(1)
-    public T remove(Node<T> node) {
+    private T remove(Node<T> node) {
         // If the node to remove is somewhere either at the
         // head or tail handle those independently
         if (node.prev == null)
@@ -189,6 +189,30 @@ public class DoublyLinkedList<T> implements Iterable<T> {
 
         // Return the data in the node we just removed
         return data;
+    }
+
+    // Remove a node at a particular index, O(n)
+    public T removeAt(int index) {
+        // Make sure the index provided is valid
+        if (index < 0 || index >= size) {
+            throw new IllegalArgumentException();
+        }
+
+        int i;
+        Node<T> trav;
+
+        // Search from the front of the list
+        if (index < size / 2) {
+            for (i = 0, trav = head; i != index; i++) {
+                trav = trav.next;
+            }
+            // Search from the back of the list
+        } else
+            for (i = size - 1, trav = tail; i != index; i--) {
+                trav = trav.prev;
+            }
+
+        return remove(trav);
     }
 
     // Remove a particular value in the linked list, O(n)
@@ -217,8 +241,26 @@ public class DoublyLinkedList<T> implements Iterable<T> {
 
     @Override
     public java.util.Iterator<T> iterator() {
-        // TODO Auto-generated method stub
-        return null;
+        return new java.util.Iterator<T>() {
+            private Node<T> trav = head;
+
+            @Override
+            public boolean hasNext() {
+                return trav != null;
+            }
+
+            @Override
+            public T next() {
+                T data = trav.data;
+                trav = trav.next;
+                return data;
+            }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+        };
     }
 
 }
