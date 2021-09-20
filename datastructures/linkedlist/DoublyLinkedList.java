@@ -239,6 +239,34 @@ public class DoublyLinkedList<T> implements Iterable<T> {
         return false;
     }
 
+    // Find the index of a particular value in the linked list, O(n)
+    public int indexOf(Object obj) {
+        int index = 0;
+        Node<T> trav = head;
+
+        // Support searching for null
+        if (obj == null) {
+            for (; trav != null; trav = trav.next, index++) {
+                if (trav.data == null) {
+                    return index;
+                }
+            }
+            // Search for non null object
+        } else
+            for (; trav != null; trav = trav.next, index++) {
+                if (obj.equals(trav.data)) {
+                    return index;
+                }
+            }
+
+        return -1;
+    }
+
+    // Check is a value is contained within the linked list
+    public boolean contains(Object obj) {
+        return indexOf(obj) != -1;
+    }
+
     @Override
     public java.util.Iterator<T> iterator() {
         return new java.util.Iterator<T>() {
@@ -263,4 +291,19 @@ public class DoublyLinkedList<T> implements Iterable<T> {
         };
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[ ");
+        Node<T> trav = head;
+        while (trav != null) {
+            sb.append(trav.data);
+            if (trav.next != null) {
+                sb.append(", ");
+            }
+            trav = trav.next;
+        }
+        sb.append(" ]");
+        return sb.toString();
+    }
 }

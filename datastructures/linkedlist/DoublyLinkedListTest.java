@@ -249,7 +249,84 @@ public class DoublyLinkedListTest {
 
     @Test
     public void testRandomizedRemoveAt() {
-        // TODO
+        java.util.LinkedList<Integer> javaLinkedList = new java.util.LinkedList<>();
+
+        for (int loops = 0; loops < LOOPS; loops++) {
+
+            list.clear();
+            javaLinkedList.clear();
+
+            List<Integer> randNums = getRandList(TEST_SZ);
+
+            for (Integer value : randNums) {
+                javaLinkedList.add(value);
+                list.add(value);
+            }
+
+            for (int i = 0; i < randNums.size(); i++) {
+
+                int rm_index = (int) (list.size() * Math.random());
+
+                Integer num1 = javaLinkedList.remove(rm_index);
+                Integer num2 = list.removeAt(rm_index);
+                assertThat(num1).isEqualTo(num2);
+                assertThat(javaLinkedList.size()).isEqualTo(list.size());
+
+                java.util.Iterator<Integer> iter1 = javaLinkedList.iterator();
+                java.util.Iterator<Integer> iter2 = list.iterator();
+                while (iter1.hasNext())
+                    assertThat(iter1.next()).isEqualTo(iter2.next());
+            }
+        }
+    }
+
+    @Test
+    public void testRandomizedIndexOf() {
+        java.util.LinkedList<Integer> javaLinkedList = new java.util.LinkedList<>();
+
+        for (int loops = 0; loops < LOOPS; loops++) {
+
+            javaLinkedList.clear();
+            list.clear();
+
+            List<Integer> randNums = genUniqueRandList(TEST_SZ);
+
+            for (Integer value : randNums) {
+                javaLinkedList.add(value);
+                list.add(value);
+            }
+
+            Collections.shuffle(randNums);
+
+            for (int i = 0; i < randNums.size(); i++) {
+                Integer elem = randNums.get(i);
+                Integer index1 = javaLinkedList.indexOf(elem);
+                Integer index2 = list.indexOf(elem);
+
+                assertThat(index1).isEqualTo(index2);
+                assertThat(javaLinkedList.size()).isEqualTo(list.size());
+
+                java.util.Iterator<Integer> iter1 = javaLinkedList.iterator();
+                java.util.Iterator<Integer> iter2 = list.iterator();
+                while (iter1.hasNext())
+                    assertThat(iter1.next()).isEqualTo(iter2.next());
+            }
+        }
+    }
+
+    @Test
+    public void testToString() {
+        DoublyLinkedList<String> strs = new DoublyLinkedList<>();
+        assertThat(strs.toString()).isEqualTo("[  ]");
+        strs.add("a");
+        assertThat(strs.toString()).isEqualTo("[ a ]");
+        strs.add("b");
+        assertThat(strs.toString()).isEqualTo("[ a, b ]");
+        strs.add("c");
+        strs.add("d");
+        strs.add("e");
+        strs.add("f");
+        assertThat(strs.toString()).isEqualTo("[ a, b, c, d, e, f ]");
     }
 
     // Generate a list of random numbers
@@ -263,4 +340,14 @@ public class DoublyLinkedListTest {
         return lst;
     }
 
+    // Generate a list of unique random numbers
+    static List<Integer> genUniqueRandList(int sz) {
+        List<Integer> lst = new ArrayList<>(sz);
+        for (int i = 0; i < sz; i++)
+            lst.add(i);
+        for (int i = 0; i < NUM_NULLS; i++)
+            lst.add(null);
+        Collections.shuffle(lst);
+        return lst;
+    }
 }
